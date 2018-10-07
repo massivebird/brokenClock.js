@@ -22,12 +22,32 @@ function formatSmallHours(hours) { // Formats hours less than 10
     return hoursDisplay;
 }
 
-function addHourAndTwentyMinutes(hours, minutes) { // Self explanatory
-    formatSmallHours(hours);
-    console.log(`The current time is: ${hoursDisplay}:00`)
+function addOneHour(hours) {
     hours++;
-    if (hours > (hoursArray.length - 1)); // If (hours > 23)
-    hours = hoursArray.indexOf((hours - 23) - 1); // Assign hours to the respective hour according to how large it is compared to 23
+    if (hours > (hoursArray.length - 1)) { // If (hours > 23)
+        hours = hoursArray.indexOf((hours - 23) - 1); // Assign hours to the respective hour according to how large it is compared to 23
+    }
+    formatSmallHours(hours);
+    return hours;
+}
+
+function formatSmallMinutes(minutes) { // Formats minutes less than 10
+    if (minutes < 10) {
+        hoursDisplay = `0${minutes}`
+    } else {
+        hoursDisplay = `${minutes}`
+    }
+    return hoursDisplay;
+}
+
+function addHourAndTwentyMinutes(hours, minutes) { // Self explanatory TEST FUNCTION
+    formatSmallHours(hours);
+    console.log(`The current time is: ${hoursDisplay}:00`);
+    console.log('\n'); // Skip line
+    console.log(`An hour and twenty minutes later...`);
+    console.log('\n');
+    addOneHour(hours); // Also formats
+    console.log(`The time is now ${hoursDisplay}:00`); // Haven't gotten to the minutes yet
 }
 
 addHourAndTwentyMinutes(5);
