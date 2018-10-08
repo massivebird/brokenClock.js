@@ -11,8 +11,6 @@ So I'll also need to specify AM or PM when inputting and outputting the alarm cl
 
 */
 
-const hoursArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] // index is equal to value
-
 function formatSmallHours(hours) { // Formats hours less than 10
     if (hours < 10) {
         hoursDisplay = `0${hours}`
@@ -24,8 +22,8 @@ function formatSmallHours(hours) { // Formats hours less than 10
 
 function addOneHour(hours) {
     hours++;
-    if (hours > (hoursArray.length - 1)) { // If (hours > 23)
-        hours = hoursArray.indexOf((hours - 23) - 1); // Assign hours to the respective hour according to how large it is compared to 23
+    if (hours > (23)) { 
+        hours = (hours - 24); // Assign hours to the respective hour according to how large it is compared to 23
     }
     formatSmallHours(hours);
     return hours;
@@ -50,4 +48,4 @@ function addHourAndTwentyMinutes(hours, minutes) { // Self explanatory TEST FUNC
     console.log(`The time is now ${hoursDisplay}:00`); // Haven't gotten to the minutes yet
 }
 
-addHourAndTwentyMinutes(5);
+addHourAndTwentyMinutes(20);
