@@ -9,6 +9,8 @@ I want to create two functions: one that takes the input of the CORRECT time - t
 One challenge lies within the formatting of the alarm clock and the clocks on my PC/phone; the latter is displayed in 24-hour format, while my alarm clock is in 12-hour. I want to maintain these formats within the inputs and outputs of the functions.
 So I'll also need to specify AM or PM when inputting and outputting the alarm clock time.
 
+I have discovered that my alarm clock is behind by 4 hours and 13 minutes
+
 */
 
 function formatSmallHours(hours) { // Formats hours less than 10
@@ -18,34 +20,51 @@ function formatSmallHours(hours) { // Formats hours less than 10
         hoursDisplay = `${hours}`
     }
     return hoursDisplay;
-}
+};
 
 function addOneHour(hours) {
     hours++;
-    if (hours > (23)) { 
-        hours = (hours - 24); // Assign hours to the respective hour according to how large it is compared to 23
-    }
-    formatSmallHours(hours);
     return hours;
 }
 
+function subtractFourHours(hours) {
+    hours = hours - 4;
+    if (hours < 0) {
+        hours = (hours + 24); // Assign hours to the respective hour according to how large it is compared to 23
+    }
+    formatSmallHours(hours);
+    return hours;
+};
+
 function formatSmallMinutes(minutes) { // Formats minutes less than 10
     if (minutes < 10) {
-        hoursDisplay = `0${minutes}`
+        minutesDisplay = `0${minutes}`
     } else {
-        hoursDisplay = `${minutes}`
+        minutesDisplay = `${minutes}`
     }
-    return hoursDisplay;
-}
+    return minutesDisplay;
+};
+
+function subtractThirteenMinutes(hours, minutes) {
+    minutes = minutes - 13;
+    if (minutes <= 0) {
+        minutes = minutes + 60;
+    }
+    formatSmallMinutes(minutes);
+    addOneHour(hours);
+    return minutes;
+};
 
 function addHourAndTwentyMinutes(hours, minutes) { // Self explanatory TEST FUNCTION
     formatSmallHours(hours);
-    console.log(`The current time is: ${hoursDisplay}:00`);
+    formatSmallMinutes(minutes);
+    console.log(`The current time is: ${hoursDisplay}:${minutesDisplay}`);
     console.log('\n'); // Skip line
-    console.log(`An hour and twenty minutes later...`);
+    console.log(`Four hours and twenty minutes later...`);
     console.log('\n');
-    addOneHour(hours); // Also formats
-    console.log(`The time is now ${hoursDisplay}:00`); // Haven't gotten to the minutes yet
-}
+    subtractFourHours(hours); // Also formats hours
+    subtractThirteenMinutes(hours, minutes);
+    console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay}`); // Haven't gotten to the minutes yet
+};
 
-addHourAndTwentyMinutes(20);
+addHourAndTwentyMinutes(23, 20);
