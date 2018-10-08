@@ -13,8 +13,11 @@ I have discovered that my alarm clock is behind by 4 hours and 13 minutes
 
 */
 
-function formatSmallHours(hours) { // Formats hours less than 10
-    if (hours < 10) {
+function formatHours(hours) { // Formats hours less than 10
+    if (hours < 0) {
+        hours = hours + 24;
+        hoursDisplay = `${hours}`;
+    } else if (hours < 10) {
         hoursDisplay = `0${hours}`
     } else {
         hoursDisplay = `${hours}`
@@ -27,11 +30,11 @@ function subtractFourHours(hours) {
     if (hours < 0) {
         hours = (hours + 24); // Assign hours to the respective hour according to how large it is compared to 23
     }
-    formatSmallHours(hours);
+    formatHours(hours);
     return hours;
 };
 
-function formatSmallMinutes(minutes) { // Formats minutes less than 10
+function formatMinutes(minutes) { // Formats minutes less than 10
     if (minutes < 10) {
         minutesDisplay = `0${minutes}`
     } else {
@@ -45,29 +48,46 @@ function subtractThirteenMinutes(minutes) {
     if (minutes < 0) { // Loops minutes backward if it reaches -1 or lower
         minutes = minutes + 60; // -1 = 59, -2 = 58, etc
     }
-    formatSmallMinutes(minutes);
+    formatMinutes(minutes);
     return minutes;
 };
 
 function subtractHourIfMinuteLoop(hours) {
     hours--;
+    formatHours(hours);
     return hours;
 }
 
-function timeFromPhoneToClock(hours, minutes) { 
-    formatSmallHours(hours);
-    formatSmallMinutes(minutes);
+function timeFromPhoneToClock(hours, minutes) {
+    hoursOriginal = hours;
+    minutesOriginal = minutes;
+    formatHours(hours);
+    formatMinutes(minutes);
     console.log(`The current time is: ${hoursDisplay}:${minutesDisplay}`);
     console.log('\n'); // Skip line
     console.log(`Minus four hours and thirteen minutes...`);
     console.log('\n'); //
     hours = subtractFourHours(hours); // Also formats hours
     if (minutes < 13) {
-        hours = subtractHourIfMinuteLoop(hours);
+        hours = subtractHourIfMinuteLoop(hours); // Also formats hours
     };
     subtractThirteenMinutes(minutes); // Also formats minutes
-    formatSmallHours(hours); 
-    console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay}`); 
+    if (hoursOriginal == 16 && minutesOriginal >= 13) {
+        formatHours(hours);
+        console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay} PM`);
+    } else if (hoursOriginal > 16) {
+        formatHours(hours);
+        console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay} PM`);
+    } else if (hoursOriginal < 4) {
+        formatHours(hours);
+        console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay} PM`);
+    } else if (hoursOriginal == 4 && minutesOriginal < 13) {
+        formatHours(hours);
+        console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay} PM`);
+    } else {
+        formatHours(hours);
+        console.log(`The time displayed on the alarm clock is ${hoursDisplay}:${minutesDisplay} AM`);
+    }
 };
 
-timeFromPhoneToClock(00, 13);
+timeFromPhoneToClock(15, 35);
